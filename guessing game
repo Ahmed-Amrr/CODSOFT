@@ -1,0 +1,52 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+int main()
+{
+    // a while loop to rerun the game if the user want using char
+    char again = 'y';
+    while (again == 'y' || again == 'Y')
+    {
+        int num, guess;
+        bool found = false;
+        // a random number generator using srand using the time as the seed and rand functions
+        srand(time(NULL));
+        num = rand() % 100;
+        cout << endl
+             << "------ you have 100 tries to get the number ------" << endl
+             << endl;
+        // this loop is for getting the user guess and checking if it is higher or lower or correct
+        for (int i = 0; i < 100; i++)
+        {
+            cout << "enter your guess:: ";
+            cin >> guess;
+            if (guess < num)
+            {
+                cout << "------ the number it higher ------" << endl
+                     << endl;
+            }
+            else if (guess > num)
+            {
+                cout << "------ the number it lower ------" << endl
+                     << endl;
+            }
+            else if (guess == num)
+            {
+                cout << "------ correct!! ------" << endl
+                     << endl;
+                found = true;
+                break;
+            }
+        }
+        // in case of losing to inform the user
+        if (!found)
+            cout << "------ you ran out of tries!! ------" << endl
+                 << endl;
+        cout << "try again? (y/n) " << endl;
+        cin >> again;
+    }
+    return 0;
+}
