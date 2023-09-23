@@ -25,12 +25,12 @@ int main()
             cin >> guess;
             if (guess < num)
             {
-                cout << "------ the number it higher ------" << endl
+                cout << "------ the number is higher ------" << endl
                      << endl;
             }
             else if (guess > num)
             {
-                cout << "------ the number it lower ------" << endl
+                cout << "------ the number is lower ------" << endl
                      << endl;
             }
             else if (guess == num)
