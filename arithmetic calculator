@@ -11,7 +11,7 @@ int main()
     // added a way of repeating the program through a while loop
     while (again == 'y' || again == 'Y')
     {
-        bool correct = false, againbool = false;
+        bool correct = false, againbool = false,notzero=false;
         cout << string(50, '_') << endl;
         cout << "\nEnter the operation (+,-,*,/):" << endl;
         cin >> sign;
@@ -33,6 +33,16 @@ int main()
         cin >> num1;
         cout << "\nEnter second number:" << endl;
         cin >> num2;
+        // checks for only invalid operation which is having a zero in the denominator
+        while(!notzero){
+            if(num2==0&&sign=='/'){
+                cout<<"\nthis operation is invalid, the denominator can't be 0, enter another number:"<<endl;
+                cin>>num2;
+                notzero=false;
+            }else{
+                notzero=true;
+            }
+        }
         cout << "\nThe result:" << endl;
         // checks for the input and prints the results
         if (sign == '+')
