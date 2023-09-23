@@ -1,0 +1,77 @@
+#include <iostream>
+
+using namespace std;
+
+int main()
+{
+    cout << "\n------This is a simple arithmetic calculator------" << endl;
+    // declare all my variables
+    float num1, num2, result;
+    char sign, again = 'y';
+    // added a way of repeating the program through a while loop
+    while (again == 'y' || again == 'Y')
+    {
+        bool correct = false, againbool = false;
+        cout << string(50, '_') << endl;
+        cout << "\nEnter the operation (+,-,*,/):" << endl;
+        cin >> sign;
+        // checks if the user entered a valid input
+        while (!correct)
+        {
+            if (sign == '+' || sign == '-' || sign == '*' || sign == '/')
+            {
+                correct = true;
+            }
+            else
+            {
+                cout << "\nYou entered wrong input, try again:" << endl;
+                cin >> sign;
+                correct = false;
+            }
+        }
+        cout << "\nEnter first number:" << endl;
+        cin >> num1;
+        cout << "\nEnter second number:" << endl;
+        cin >> num2;
+        cout << "\nThe result:" << endl;
+        // checks for the input and prints the results
+        if (sign == '+')
+        {
+            result = num1 + num2;
+            cout << num1 << "+" << num2 << "=" << result << endl;
+        }
+        else if (sign == '-')
+        {
+            result = num1 - num2;
+            cout << num1 << "-" << num2 << "=" << result << endl;
+        }
+        else if (sign == '*')
+        {
+            result = num1 * num2;
+            cout << num1 << "*" << num2 << "=" << result << endl;
+        }
+        else if (sign == '/')
+        {
+            result = num1 / num2;
+            cout << num1 << "/" << num2 << "=" << result << endl;
+        }
+        // asks the user and depending on the answer it closes the program or repeats the process
+        cout << "\nDo you want to enter another operation? (y/n)" << endl;
+        cin >> again;
+        // checks if the user enter a valid answer
+        while (!againbool)
+        {
+            if (again == 'y' || again == 'Y' || again == 'n' || again == 'N')
+            {
+                againbool = true;
+            }
+            else
+            {
+                cout << "\nYou entered wrong answer, try again:" << endl;
+                cin >> again;
+                againbool = false;
+            }
+        }
+    }
+    return 0;
+}
