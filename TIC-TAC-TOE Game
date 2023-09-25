@@ -13,6 +13,7 @@ using namespace std;
 
 char grid[9] = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
 
+// this function is for displaying the board with the inputs
 void board()
 {
     cout << "\n\t\tTIC TAC TOE" << endl;
@@ -28,20 +29,24 @@ void board()
     cout << "\t" << grid[6] << "\t|\t" << grid[7] << "\t|\t" << grid[8] << endl;
 }
 
+// checks for the status of the game
 int check()
 {
+    // in case of winning
     if ((grid[0] == grid[1] && grid[1] == grid[2]) || (grid[3] == grid[4] && grid[4] == grid[5]) || (grid[6] == grid[7] && grid[7] == grid[8]) ||
         (grid[0] == grid[3] && grid[3] == grid[6]) || (grid[1] == grid[4] && grid[4] == grid[7]) || (grid[2] == grid[5] && grid[5] == grid[8]) ||
         (grid[0] == grid[4] && grid[4] == grid[8]) || (grid[2] == grid[4] && grid[4] == grid[6]))
     {
         return 1;
     }
+    // in case of a draw
     else if (grid[0] != '1' && grid[1] != '2' && grid[2] != '3' &&
              grid[3] != '4' && grid[4] != '5' && grid[5] != '6' &&
              grid[6] != '7' && grid[7] != '8' && grid[8] != '9')
     {
         return -1;
     }
+    // the game is still pending
     else
     {
         return 0;
@@ -52,8 +57,10 @@ int main()
 {
     char mark, again = 'y';
     int select;
+    // a while loop for repeating the game if wanted
     while (tolower(again) == 'y')
     {
+        // resets all the values
         grid[0] = '1';
         grid[1] = '2';
         grid[2] = '3';
@@ -66,6 +73,7 @@ int main()
         bool againbool = false;
         int player = 1;
         system("cls");
+        // gets the inputs from the players until a draw or one of them wins
         while (check() == 0)
         {
             board();
@@ -82,6 +90,7 @@ int main()
             cout << "\n\tPlayer " << player << "'s turn, choose a number: ";
             cin >> select;
             cin.ignore();
+            // checks if the selected input is valid or not
             if (select == 1 && grid[0] == '1')
                 grid[0] = mark;
             else if (select == 2 && grid[1] == '2')
@@ -109,6 +118,7 @@ int main()
             player++;
             system("cls");
         }
+        // after getting the required number of inputs we check if it is a win or a draw
         board();
         if (check() == 1)
             cout << "\n\t\tPlayer " << player - 1 << " wins!!" << endl;
@@ -117,6 +127,7 @@ int main()
 
         cout << "\ndo you want to play again ? (y/n)" << endl;
         cin >> again;
+        // a while loop to make sure the user entered the required answer
         while (!againbool)
         {
             if (tolower(again) == 'y' || tolower(again) == 'n')
