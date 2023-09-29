@@ -1,0 +1,194 @@
+/*
+_____________________________________________________________________________________________________________________
+file  : To_Do list.cpp
+brief : Make your To_Do list
+author: Ahmed Amr Ali
+date  : 29 September 2023
+_____________________________________________________________________________________________________________________
+*/
+
+#include <iostream>
+#include <string.h>
+
+using namespace std;
+
+class To_Do_list
+{                // making my list a linked list
+    struct item; // the elements of the list
+    typedef item *link;
+    link head, tail, current;
+    int num; // for counting number of elements
+    struct item
+    {
+        string task;
+        string status;
+        link next;
+    };
+
+public:
+    To_Do_list();               // initiates the list
+    void add(string &usertask); // adds a task
+    bool remove_task(int indx); // removes a task
+    bool complete(int indx);    // mark a task as completed
+    void view();                // prints your list
+};
+
+To_Do_list::To_Do_list()
+{
+    head = 0;
+    tail = 0;
+    current = 0;
+    num = 0;
+}
+
+void To_Do_list::add(string &usertask)
+{
+    link additem = new item;
+    additem->task = usertask;
+    additem->status = "(not completed...)";
+    if (head == 0)
+        head = additem;
+    else
+        tail->next = additem;
+    tail = additem;
+    additem->next = 0;
+    num++;
+}
+
+void To_Do_list::view()
+{
+    current = head;
+    cout << endl
+         << string(50, '=') << endl;
+    cout << "\t\tYour To_Do list" << endl;
+    cout << string(50, '=') << endl;
+    if (head == 0)
+    { // is the list is empty
+        cout << "\n\n\t\tYour list is empty...\n\n"
+             << endl;
+    }
+    for (int i = 0; i < num; i++)
+    { // if the list has tasks
+        cout << "| " << i + 1 << ". " << current->task << "\t\t" << current->status << endl;
+        current = current->next;
+    }
+    cout << string(50, '=') << endl;
+}
+
+bool To_Do_list::remove_task(int indx)
+{
+    link prev, target;
+    target = head;
+    prev = head;
+    if (head == 0)
+        return false; // in case the list is empty you can't remove anything
+    for (int i = 0; i < indx - 1; i++)
+    {
+        if (target->next == 0)
+            return false; // in case the number you entered doesn't exist
+        prev = target;
+        target = target->next;
+    }
+    prev->next = target->next;
+    if (target == head && target->next == 0)
+    {
+        head = 0;
+        tail = 0;
+        current = 0;
+    }
+    if (target == current)
+        current = 0;
+    if (target == head)
+        head = target->next;
+    if (target == tail)
+    {
+        tail = prev;
+        tail->next = 0;
+    }
+    delete target;
+    num--;
+    return true;
+}
+
+bool To_Do_list::complete(int indx)
+{
+    current = head;
+    if (head == 0)
+        return false;
+    for (int i = 0; i < indx - 1; i++)
+    {
+        if (current->next == 0)
+            return false;
+        current = current->next;
+    }
+    current->status = "(completed)";
+    return true;
+}
+
+int main()
+{
+    string usertask, command;
+    int removenum, completenum;
+    To_Do_list userlist;
+    cout << string(50, '_') << endl;
+    cout << "\n\t\t  To_Do list" << endl;
+    cout << string(50, '_') << endl;
+    while (1)
+    { // a non ending loop until the user enters the command (exit)
+        cout << "\nenter your command:(add,view,remove,complete,exit)" << endl;
+        cout << "-> ";
+        cin >> command;
+        cin.ignore();
+        for (int i = 0; i < command.length(); i++)
+        {
+            command[i] = tolower(command[i]); // makes the string all lowercase so the program can understand the command
+        }
+        if (command == "add")
+        {
+            cout << "\nenter the task you want to add:" << endl
+                 << "- ";
+            cin >> ws; // to clear the input buffer and ensure the user only enters his required data
+            getline(cin, usertask);
+            userlist.add(usertask);
+        }
+        else if (command == "view")
+        {
+            userlist.view();
+        }
+        else if (command == "remove")
+        {
+            cout << "\nenter the number of the task you want to remove: ";
+            cin >> removenum;
+            if (userlist.remove_task(removenum))
+            {
+                cout << "-> task removed" << endl;
+            }
+            else
+            {
+                cout << "-> there was an error!!" << endl;
+            }
+        }
+        else if (command == "complete")
+        {
+            cout << "\nenter the number of the task you completed: ";
+            cin >> completenum;
+            if (userlist.complete(completenum))
+            {
+                cout << "-> task marked complete" << endl;
+            }
+            else
+            {
+                cout << "-> there was an error!!" << endl;
+            }
+        }
+        else if (command == "exit")
+        {
+            break;
+        }
+        else
+        {
+            cout << "\nyou enter wrong command, try again.." << endl;
+        }
+    }
+    return 0;
+}
